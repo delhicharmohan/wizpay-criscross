@@ -17,7 +17,7 @@ function App() {
     const amount = Math.floor(Math.random() * 9) + 1;
 
     try {
-      const response = await fetch('http://localhost:5001/api/deposit', {
+      const response = await fetch('https://wizpay-criscross-1.onrender.com/api/deposit', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -61,7 +61,7 @@ function App() {
     const amount = Math.floor(Math.random() * 9) + 1;
 
     try {
-      const response = await fetch('http://localhost:5001/api/withdraw', {
+      const response = await fetch('https://wizpay-criscross-1.onrender.com/api/withdraw', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
