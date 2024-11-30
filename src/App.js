@@ -10,11 +10,17 @@ function App() {
   const [payoutURL, setPayoutURL] = useState('');
   const [apiResponse, setApiResponse] = useState(null);
   const [transactionType, setTransactionType] = useState('');
+  const [depositAmount, setDepositAmount] = useState('');
 
   const handleDeposit = async () => {
+    if (!depositAmount || isNaN(depositAmount) || depositAmount <= 0) {
+      alert('Please enter a valid amount');
+      return;
+    }
+
     setLoading(true);
     setTransactionType('deposit');
-    const amount = Math.floor(Math.random() * 9) + 1;
+    const amount = parseFloat(depositAmount);
 
     try {
       const response = await fetch('https://wizpay-criscross-1.onrender.com/api/deposit', {
@@ -52,6 +58,7 @@ function App() {
       alert('Failed to process deposit');
     } finally {
       setLoading(false);
+      setDepositAmount('');
     }
   };
 
@@ -111,13 +118,24 @@ function App() {
         <div className="balance-amount">${balance}</div>
       </div>
       <div className="button-container">
-        <button 
-          className="deposit-btn" 
-          onClick={handleDeposit}
-          disabled={loading}
-        >
-          {loading && transactionType === 'deposit' ? 'Processing...' : `Deposit $${Math.floor(Math.random() * 9) + 1}`}
-        </button>
+        <div className="deposit-section">
+          <input
+            type="number"
+            value={depositAmount}
+            onChange={(e) => setDepositAmount(e.target.value)}
+            placeholder="Enter amount"
+            className="amount-input"
+            min="1"
+            step="1"
+          />
+          <button 
+            className="deposit-btn" 
+            onClick={handleDeposit}
+            disabled={loading || !depositAmount}
+          >
+            {loading && transactionType === 'deposit' ? 'Processing...' : 'Deposit'}
+          </button>
+        </div>
         <button 
           className="withdraw-btn" 
           onClick={handleWithdrawal}

@@ -26,6 +26,8 @@
   display: flex;
   gap: 20px;
   justify-content: center;
+  align-items: center;
+  margin: 20px 0;
 }
 
 button {
@@ -239,4 +241,24 @@ button:disabled {
 
 .withdraw-btn:disabled {
   background-color: #feb2b2;
+}
+
+.deposit-section {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.amount-input {
+  padding: 12px;
+  font-size: 16px;
+  border: 1px solid #e2e8f0;
+  border-radius: 5px;
+  width: 120px;
+}
+
+.amount-input:focus {
+  outline: none;
+  border-color: #48bb78;
+  box-shadow: 0 0 0 1px #48bb78;
 }
