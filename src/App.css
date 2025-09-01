@@ -168,19 +168,25 @@ button:disabled {
 }
 
 .debug-section {
-  margin: 20px 0;
+  margin-top: 20px;
   padding: 15px;
-  background-color: #f8f9fa;
-  border-radius: 5px;
-  border: 1px solid #e2e8f0;
+  background-color: #f5f5f5;
+  border-radius: 8px;
+  font-family: monospace;
+  font-size: 12px;
+}
+
+.debug-section h3 {
+  margin-top: 0;
+  color: #333;
 }
 
 .debug-section pre {
-  background-color: #edf2f7;
+  background-color: #fff;
   padding: 10px;
   border-radius: 4px;
   overflow-x: auto;
-  font-size: 12px;
+  max-height: 200px;
 }
 
 .debug-section div {
@@ -210,6 +216,55 @@ button:disabled {
   padding: 10px;
   border-radius: 4px;
   margin: 10px 0;
+}
+
+/* Payment page styles */
+.payment-container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.payment-card {
+  background: white;
+  border-radius: 12px;
+  padding: 30px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.payment-card h2 {
+  color: #2c3e50;
+  margin-bottom: 20px;
+  font-size: 1.5em;
+}
+
+.payment-status {
+  margin: 20px 0;
+  text-align: left;
+}
+
+.payment-status p {
+  margin: 10px 0;
+  padding: 10px;
+  border-radius: 6px;
+  background-color: #f8f9fa;
+}
+
+.payment-card button {
+  background-color: #3498db;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 20px;
+}
+
+.payment-card button:hover {
+  background-color: #2980b9;
 }
 
 .transaction-type {
