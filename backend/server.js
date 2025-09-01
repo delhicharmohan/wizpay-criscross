@@ -2,8 +2,6 @@ const express = require('express');
 const cors = require('cors');
 const crypto = require('crypto');
 const axios = require('axios');
-const path = require('path');
-require('dotenv').config();
 
 const app = express();
 app.use(cors({
@@ -14,21 +12,12 @@ app.use(cors({
     'http://192.168.1.54:3000',
     'http://192.168.1.54:3001',
     'http://192.168.1.54:3002',
-    'https://wizpay-criscross-1.onrender.com'
+    'https://wizpay-backend.onrender.com',
+    'https://wizpay-frontend.onrender.com'
   ],
   credentials: true
 }));
 app.use(express.json());
-
-// Serve static files from React build
-app.use(express.static(path.join(__dirname, '../build')));
-
-// Environment-based API URL configuration
-const getApiUrl = () => {
-  return process.env.NODE_ENV === 'production' 
-    ? process.env.PRODUCTION_API_URL 
-    : process.env.API_BASE_URL;
-};
 
 const generateHash = (plainText) => {
   const secretKey = 's23e4567e89b12d3a45642661417400s';
@@ -61,7 +50,7 @@ app.post('/api/deposit', async (req, res) => {
 
     const response = await axios({
       method: 'post',
-      url: `${getApiUrl()}/api/v1/orders`,
+      url: 'http://localhost:8080/api/v1/orders',
       headers: {
         'Content-Type': 'application/json',
         'x-key': '550e8400e29b41d4a716446655440000',
@@ -114,7 +103,7 @@ app.post('/api/withdraw', async (req, res) => {
 
     const response = await axios({
       method: 'post',
-      url: `${getApiUrl()}/api/v1/orders`,
+      url: 'http://localhost:8080/api/v1/orders',
       headers: {
         'Content-Type': 'application/json',
         'x-key': '550e8400e29b41d4a716446655440000',
@@ -141,16 +130,10 @@ app.post('/api/withdraw', async (req, res) => {
   }
 });
 
-// Serve React app for all non-API routes
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../build', 'index.html'));
-});
-
 const PORT = process.env.PORT || 5001;
 const HOST = process.env.HOST || '0.0.0.0';
 app.listen(PORT, HOST, () => {
   console.log(`Server running on ${HOST}:${PORT}`);
   console.log(`Development server accessible at: http://localhost:${PORT}`);
   console.log(`Network accessible at: http://192.168.1.54:${PORT}`);
-  console.log(`API URL: ${getApiUrl()}`);
 }); 
