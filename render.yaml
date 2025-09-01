@@ -1,0 +1,18 @@
+services:
+  - type: web
+    name: wizpay-backend
+    env: node
+    region: oregon
+    plan: free
+    buildCommand: npm install
+    startCommand: node server.js
+    rootDir: backend
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 5001
+      - key: HOST
+        value: 0.0.0.0
+    autoDeploy: true
+    branch: main
