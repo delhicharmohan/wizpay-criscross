@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import './App.css';
 
-// API configuration - using same server for both frontend and backend
+// API configuration - using relative paths for single server setup
 const API_BASE_URL = '';
 
 function App() {
@@ -14,22 +14,6 @@ function App() {
   const [apiResponse, setApiResponse] = useState(null);
   const [transactionType, setTransactionType] = useState('');
   const [depositAmount, setDepositAmount] = useState('');
-  const [currentView, setCurrentView] = useState('wallet');
-  const [paymentId, setPaymentId] = useState(null);
-
-  // Handle URL routing for payment pages
-  useEffect(() => {
-    const hash = window.location.hash;
-    if (hash.startsWith('#/pay/')) {
-      const id = hash.split('/')[2];
-      setPaymentId(id);
-      setCurrentView('payment');
-    } else if (hash.startsWith('#/withdraw/')) {
-      const id = hash.split('/')[2];
-      setPaymentId(id);
-      setCurrentView('withdrawal');
-    }
-  }, []);
 
   const handleDeposit = async () => {
     if (!depositAmount || isNaN(depositAmount) || depositAmount <= 0) {
@@ -128,57 +112,6 @@ function App() {
   const getActiveURL = () => {
     return transactionType === 'deposit' ? paymentURL : payoutURL;
   };
-
-  // Payment page component
-  const PaymentPage = () => (
-    <div className="payment-container">
-      <h1>Payment Processing</h1>
-      <div className="payment-card">
-        <h2>Payment ID: {paymentId}</h2>
-        <p>Processing your payment request...</p>
-        <div className="payment-status">
-          <p>✅ Payment request received</p>
-          <p>⏳ Waiting for confirmation</p>
-        </div>
-        <button onClick={() => {
-          setCurrentView('wallet');
-          window.location.hash = '';
-        }}>
-          Back to Wallet
-        </button>
-      </div>
-    </div>
-  );
-
-  // Withdrawal page component
-  const WithdrawalPage = () => (
-    <div className="payment-container">
-      <h1>Withdrawal Processing</h1>
-      <div className="payment-card">
-        <h2>Withdrawal ID: {paymentId}</h2>
-        <p>Processing your withdrawal request...</p>
-        <div className="payment-status">
-          <p>✅ Withdrawal request received</p>
-          <p>⏳ Processing payout</p>
-        </div>
-        <button onClick={() => {
-          setCurrentView('wallet');
-          window.location.hash = '';
-        }}>
-          Back to Wallet
-        </button>
-      </div>
-    </div>
-  );
-
-  // Render different views based on current route
-  if (currentView === 'payment') {
-    return <PaymentPage />;
-  }
-
-  if (currentView === 'withdrawal') {
-    return <WithdrawalPage />;
-  }
 
   return (
     <div className="wallet-container">

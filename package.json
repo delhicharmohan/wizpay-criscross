@@ -14,10 +14,11 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build && cp -r build/* backend/",
+    "build": "GENERATE_SOURCEMAP=false react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "server": "node backend/server.js"
+    "deploy": "npm run build && cp -r build/* backend/static/",
+    "start:server": "cd backend && node server.js"
   },
   "eslintConfig": {
     "extends": [
