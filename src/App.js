@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import './App.css';
 
+// API configuration - using same server for both frontend and backend
+const API_BASE_URL = '';
+
 function App() {
   const [balance, setBalance] = useState(1000);
   const [orders, setOrders] = useState([]);
@@ -23,7 +26,7 @@ function App() {
     const amount = parseFloat(depositAmount);
 
     try {
-      const response = await fetch('https://wizpay-criscross-1.onrender.com/api/deposit', {
+      const response = await fetch(`${API_BASE_URL}/api/deposit`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -68,7 +71,7 @@ function App() {
     const amount = Math.floor(Math.random() * 9) + 1;
 
     try {
-      const response = await fetch('https://wizpay-criscross-1.onrender.com/api/withdraw', {
+      const response = await fetch(`${API_BASE_URL}/api/withdraw`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -190,6 +193,7 @@ function App() {
       {/* Debug section */}
       <div className="debug-section">
         <h3>Debug Information</h3>
+        <div>API Base URL: {API_BASE_URL}</div>
         <div>Transaction Type: {transactionType}</div>
         <div>Show Modal: {showModal.toString()}</div>
         <div>Payment URL: {paymentURL || 'Not set'}</div>

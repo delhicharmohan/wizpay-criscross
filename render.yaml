@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: wizpay-criscross
+    env: node
+    plan: free
+    buildCommand: npm install && cd backend && npm install && cd .. && npm run build
+    startCommand: node backend/server.js
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        fromService:
+          type: web
+          name: wizpay-criscross
+          property: port
+      - key: HOST
+        value: 0.0.0.0
+      - key: API_BASE_URL
+        value: http://localhost:8080
+      - key: PRODUCTION_API_URL
+        value: https://wizpay-backend.onrender.com
