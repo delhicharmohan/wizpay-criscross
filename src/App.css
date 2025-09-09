@@ -262,3 +262,74 @@ button:disabled {
   border-color: #48bb78;
   box-shadow: 0 0 0 1px #48bb78;
 }
+
+.claim-urls-btn {
+  background-color: #4299e1;
+  color: white;
+}
+
+.claim-urls-btn:hover {
+  background-color: #3182ce;
+}
+
+.claim-urls-btn:disabled {
+  background-color: #90cdf4;
+}
+
+.claim-urls-section {
+  margin-top: 40px;
+  padding: 20px;
+  background-color: #f8f9fa;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.claim-buttons-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.claim-amount-btn {
+  background-color: #48bb78;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 15px 25px;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-width: 80px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.claim-amount-btn:hover {
+  background-color: #38a169;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.claim-amount-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.no-claims {
+  text-align: center;
+  color: #718096;
+  font-style: italic;
+  padding: 20px;
+}
+
+.close-claims-btn {
+  background-color: #718096;
+  color: white;
+  margin-top: 15px;
+}
+
+.close-claims-btn:hover {
+  background-color: #4a5568;
+}

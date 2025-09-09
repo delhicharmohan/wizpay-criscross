@@ -134,6 +134,39 @@ app.post('/api/withdraw', async (req, res) => {
   }
 });
 
+app.get('/api/claim-urls', async (req, res) => {
+  try {
+    const payload = {};
+    const hash = generateHash(JSON.stringify(payload));
+
+    const response = await axios({
+      method: 'get',
+      url: 'https://wizpay-backend.onrender.com/api/v1/orders/instant-payout/available',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-key': '550e8400e29b41d4a716446655440000',
+        'x-hash': hash,
+        'vendor': 'gocomart'
+      },
+      data: payload
+    });
+
+    console.log('Claim URLs Response:', response.data);
+
+    res.json({
+      success: true,
+      data: response.data,
+      message: 'Claim URLs fetched successfully'
+    });
+  } catch (error) {
+    console.error('Claim URLs Error:', error.response?.data || error.message);
+    res.status(500).json({ 
+      success: false, 
+      message: error.response?.data?.message || 'Internal server error' 
+    });
+  }
+});
+
 // Serve React app for all non-API routes
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'static', 'index.html'));

@@ -14,6 +14,8 @@ function App() {
   const [apiResponse, setApiResponse] = useState(null);
   const [transactionType, setTransactionType] = useState('');
   const [depositAmount, setDepositAmount] = useState('');
+  const [claimUrls, setClaimUrls] = useState([]);
+  const [showClaimUrls, setShowClaimUrls] = useState(false);
 
   const handleDeposit = async () => {
     if (!depositAmount || isNaN(depositAmount) || depositAmount <= 0) {
@@ -109,6 +111,38 @@ function App() {
     }
   };
 
+  const handleFetchClaimUrls = async () => {
+    setLoading(true);
+    setTransactionType('claim-urls');
+
+    try {
+      const response = await fetch(`${API_BASE_URL}/api/claim-urls`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      });
+
+      const data = await response.json();
+      console.log('Claim URLs Response:', data);
+      setApiResponse(data);
+
+      if (data.success) {
+        // Handle nested response structure: data.data.data contains the actual claim URLs
+        const claimUrlsData = data.data?.data || data.data || [];
+        setClaimUrls(claimUrlsData);
+        setShowClaimUrls(true);
+      } else {
+        alert('Failed to fetch claim URLs: ' + data.message);
+      }
+    } catch (error) {
+      console.error('Error fetching claim URLs:', error);
+      alert('Failed to fetch claim URLs');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const getActiveURL = () => {
     return transactionType === 'deposit' ? paymentURL : payoutURL;
   };
@@ -146,6 +180,13 @@ function App() {
         >
           {loading && transactionType === 'withdraw' ? 'Processing...' : `Withdraw $${Math.floor(Math.random() * 9) + 1}`}
         </button>
+        <button 
+          className="claim-urls-btn" 
+          onClick={handleFetchClaimUrls}
+          disabled={loading}
+        >
+          {loading && transactionType === 'claim-urls' ? 'Loading...' : 'View Claim URLs'}
+        </button>
       </div>
 
       <div className="orders-section">
@@ -163,6 +204,36 @@ function App() {
           ))}
         </div>
       </div>
+
+      {/* Claim URLs Section */}
+      {showClaimUrls && (
+        <div className="claim-urls-section">
+          <h2>Available Claims</h2>
+          <div className="claim-buttons-container">
+            {claimUrls.length > 0 ? (
+              claimUrls.map((claim, index) => (
+                <button
+                  key={index}
+                  className="claim-amount-btn"
+                  onClick={() => window.open(claim.claimURL, '_blank')}
+                >
+                  ${claim.amount}
+                </button>
+              ))
+            ) : (
+              <div className="no-claims">
+                No claim URLs available
+              </div>
+            )}
+          </div>
+          <button 
+            className="close-claims-btn"
+            onClick={() => setShowClaimUrls(false)}
+          >
+            Close
+          </button>
+        </div>
+      )}
 
       {/* Modal for both deposit and withdrawal */}
       {showModal && getActiveURL() && (
