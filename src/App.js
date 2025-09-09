@@ -185,7 +185,7 @@ function App() {
           onClick={handleFetchClaimUrls}
           disabled={loading}
         >
-          {loading && transactionType === 'claim-urls' ? 'Loading...' : 'View Claim URLs'}
+          {loading && transactionType === 'claim-urls' ? 'Loading...' : 'Pay using P2P'}
         </button>
       </div>
 
@@ -208,7 +208,7 @@ function App() {
       {/* Claim URLs Section */}
       {showClaimUrls && (
         <div className="claim-urls-section">
-          <h2>Available Claims</h2>
+          <h2>P2P Payment Options</h2>
           <div className="claim-buttons-container">
             {claimUrls.length > 0 ? (
               claimUrls.map((claim, index) => (
